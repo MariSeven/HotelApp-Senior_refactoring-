@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Senior_Bilet_refactoring_27_10_26
 {
-    internal class Rooms
+    public class Rooms
     {
         public string Number {  get;  set; }
         public string Type { get;  set; }

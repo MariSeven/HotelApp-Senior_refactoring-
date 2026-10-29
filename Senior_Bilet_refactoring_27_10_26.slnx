@@ -1,3 +1,6 @@
 <Solution>
+  <Folder Name="/Элементы решения/">
+    <File Path=".gitignore" />
+  </Folder>
   <Project Path="Senior_Bilet_refactoring_27_10_26.csproj" />
 </Solution>
