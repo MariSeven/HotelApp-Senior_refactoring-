@@ -21,7 +21,7 @@ namespace Senior_Bilet_refactoring_27_10_26.services
             _costCalculatorService = costCalculatorService;
             _bookingFactory = bookingFactory;
         }
-
+        //создание бронирования с валидацией дат заезда и выезда + проверка на наличие гостя и номера (со статусом)
         public string Create(string guestName, string roomNumber, DateOnly checkIn, DateOnly checkOut, string promo)
         {
             if (checkOut <= checkIn) throw new ArgumentException("Дата выезда должна быть позже заезда");
@@ -30,8 +30,8 @@ namespace Senior_Bilet_refactoring_27_10_26.services
             var room = _roomService.FindNumber(roomNumber) ?? throw new InvalidOperationException("Номер не найден");
             if (!room.Available) throw new InvalidOperationException("Номер уже занят");
 
-            int nights = checkOut.DayNumber - checkIn.DayNumber;
-            double Sum = _costCalculatorService.Calculate(room, nights, promo, guest, checkIn);
+            int nights = checkOut.DayNumber - checkIn.DayNumber; //подсчет кол-ва ночей бронирования
+            double Sum = _costCalculatorService.Calculate(room, nights, promo, guest, checkIn); //вызов метода расчета общей суммы за проживание
 
             //создание (фабрика)
             var booking = _bookingFactory.Create(guest, room, checkIn, checkOut, Sum);
@@ -42,21 +42,24 @@ namespace Senior_Bilet_refactoring_27_10_26.services
 
             return booking.Id;
         }
-
+        //отмена брони (статус)
         public void Cancel(string bookingId)
         {
-            var booking = _bookings.FirstOrDefault(b => b.Id == bookingId) ?? throw new InvalidOperationException("Бронирование не найдено");
-            if (booking.Status == "cancelled") throw new InvalidOperationException("Уже отменено");
+            var booking = _bookings.FirstOrDefault(item => item.Id == bookingId) ?? throw new InvalidOperationException("бронирование не найдено");
+            if (booking.Status == "cancell") throw new InvalidOperationException("бронирование уже отменено");
 
-            double penalty = _pricingService.CalculatePenalty(booking.SumPrice);
-            booking.Status = "cancelled";
+            double penalty = _costCalculatorService.CalculatePenalty(booking.SumPrice);
+            booking.Status = "cancell";
             _roomService.MarkRoomAvailable(booking.Room.Number);
 
-            Console.WriteLine($"Бронирование {bookingId} отменено. Штраф: {penalty:C}");
+            Console.WriteLine($"бронирование {bookingId} отменено. Штраф: {penalty:C}");
         }
-        public Booking FindById(string bookingId) => _bookings.FirstOrDefault(b => b.Id == bookingId);
-        public List<Booking> GetAll() => _bookings;
-        public double GetRevenue() => _bookings.Where(b => b.Status == "confirmed").Sum(b => b.SumPrice);
+        //поиск брони по ИД
+        public Bookings FindById(string bookingId) => _bookings.FirstOrDefault(item => item.Id == bookingId);
+        //получение списка всех бронец
+        public List<Bookings> GetAll() => _bookings;
+        //расчет дохода по подтвержденным броням
+        public double GetRevenue() => _bookings.Where(item => item.Status == "confirm").Sum(item => item.SumPrice);
     }
 }
     
