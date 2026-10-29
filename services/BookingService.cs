@@ -52,14 +52,14 @@ namespace Senior_Bilet_refactoring_27_10_26.services
             booking.Status = "cancell";
             _roomService.MarkRoomAvailable(booking.Room.Number);
 
-            Console.WriteLine($"бронирование {bookingId} отменено. Штраф: {penalty:C}");
+            Console.WriteLine($"бронирование {bookingId} отменено. Штраф: {penalty:F2}");
         }
         //поиск брони по ИД
         public Bookings FindById(string bookingId) => _bookings.FirstOrDefault(item => item.Id == bookingId);
         //получение списка всех бронец
         public List<Bookings> GetAll() => _bookings;
         //расчет дохода по подтвержденным броням
-        public double GetRevenue() => _bookings.Where(item => item.Status == "confirm").Sum(item => item.SumPrice);
+        public double GetRevenue() => _bookings.Where(item => item.Status == "confirm").Sum(item => item.SumPrice)+ CostCalculatorService.SumReport;
     }
 }
     

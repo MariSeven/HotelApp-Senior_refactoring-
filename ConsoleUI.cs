@@ -29,22 +29,22 @@ namespace Senior_Bilet_refactoring_27_10_26
             Console.WriteLine($"Заезд: {booking.CheckIn}"); 
             Console.WriteLine($"Выезд: {booking.CheckOut}");
             Console.WriteLine($"Статус: {booking.Status}");
-            Console.WriteLine($"ИТОГО: {booking.SumPrice:C}");
+            Console.WriteLine($"ИТОГО: {booking.SumPrice:F2} р.");
             Console.WriteLine("===============\n");
         }
 
         public void PrintAllBookings()
         {
-            Console.WriteLine("\n--- Все бронирования ---"); // <-- вместо коммента
+            Console.WriteLine("\n=== Все бронирования ==="); // <-- вместо коммента
             foreach (var q in _bookingService.GetAll())
-                Console.WriteLine($"{q.Id} | {q.Guest.Name} | {q.Room.Number} | {q.Status} | {q.SumPrice:C}");
+                Console.WriteLine($"{q.Id} | {q.Guest.Name} | {q.Room.Number} | {q.Status} | {q.SumPrice:F2} р.");
         }
 
         public void PrintAvailableRooms()
         {
-            Console.WriteLine("\n--- Свободные номера ---"); // <-- вместо коммента
+            Console.WriteLine("\n=== Свободные номера ==="); // <-- вместо коммента
             foreach (var q in _roomService.GetAvailableRooms())
-                Console.WriteLine($"{q.Number} | {q.Type} | {q.Price:C}");
+                Console.WriteLine($"{q.Number} | {q.Type} | {q.Price:F2} р.");
         }
     }
 }

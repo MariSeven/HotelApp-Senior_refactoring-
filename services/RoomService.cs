@@ -18,9 +18,9 @@ namespace Senior_Bilet_refactoring_27_10_26.services
             _roomFactory = roomFactory;
         }
         //добавление комнаты (фабрикой)
-        public void AddRoom(string number, string type, double price)
+        public void AddRoom(string number, string type)
         {
-            var room = _roomFactory.Create(number, type, price);
+            var room = _roomFactory.Create(number, type, AppConst.MinSum * GetRoomTypeMultiplier(type));
 
             _rooms.Add(room);
 

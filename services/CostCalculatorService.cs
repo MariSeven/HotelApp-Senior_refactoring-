@@ -7,9 +7,9 @@ namespace Senior_Bilet_refactoring_27_10_26.services
     //класс расчета итоговой стоимости с учетом всех скидок и наценок
     public class CostCalculatorService
     {
+        public static double SumReport { get; private set; }
         private readonly RoomService _roomService;
         private readonly GuestService _guestService;
-
         public CostCalculatorService(RoomService roomService, GuestService guestService)
         {
             _roomService = roomService;
@@ -61,6 +61,8 @@ namespace Senior_Bilet_refactoring_27_10_26.services
         //штраф
         public double CalculatePenalty(double totalPrice)
         {
+
+            SumReport += totalPrice * AppConst.PenaltyPlus;
             return totalPrice * AppConst.PenaltyPlus;
         }
     }
