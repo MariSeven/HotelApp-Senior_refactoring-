@@ -50,6 +50,7 @@ namespace Senior_Bilet_refactoring_27_10_26.services
 
             double penalty = _costCalculatorService.CalculatePenalty(booking.SumPrice);
             booking.Status = "cancell";
+            booking.Guest.LoylLvl = 0;
             _roomService.MarkRoomAvailable(booking.Room.Number);
 
             Console.WriteLine($"бронирование {bookingId} отменено. Штраф: {penalty:F2}");

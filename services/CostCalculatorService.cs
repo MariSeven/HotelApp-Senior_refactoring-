@@ -19,7 +19,6 @@ namespace Senior_Bilet_refactoring_27_10_26.services
         public double Calculate(Rooms room, int nights, string promoCode, Guests guest, DateOnly checkIn)
         {
             double total = room.Price * nights;
-            total *= _roomService.GetRoomTypeMultiplier(room.Type);
             total = DurationDiscount(total, nights);
             total = PromoDiscount(total, promoCode);
             total = LoyalDiscount(total, guest);

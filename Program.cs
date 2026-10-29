@@ -32,11 +32,11 @@ namespace Senior_Bilet_refactoring_27_10_26
             string id1 = bookingService.Create("Алексей", "400", new DateOnly(2026, 10, 30), new DateOnly(2026, 11, 1), "");
             Console.WriteLine($"Создано: {id1}");
 
-            //бронирование люкса на 7 дней по промо WELCOME10 (ожидание 7168,5)
+            //бронирование люкса на 7 дней по промо WELCOME10 (ожидание 30107,7)
             string id2 = bookingService.Create("Марина", "408", new DateOnly(2026, 10, 30), new DateOnly(2026, 11, 6), "WELCOME10");
             Console.WriteLine($"Создано: {id2}");
 
-            //отмена бронирования (ожидается штраф 1560)
+            //отмена бронирования (ожидается штраф 1416)
             bookingService.Cancel("BK0001");
 
             //попытка занять уже забронированный номер
@@ -44,15 +44,16 @@ namespace Senior_Bilet_refactoring_27_10_26
             catch (Exception e) { Console.WriteLine($"Ошибка: {e.Message}"); }
 
 
-            //Гость с уровнем лояльности 3 
+            //Гость с уровнем лояльности 3 (ожидается 6018)
             var alexey = guestService.FindByName("Алексей");
             if (alexey != null) alexey.LoylLvl = 3; //для тестирования искусственно повышен уровень до 3
 
             string id4 = bookingService.Create("Алексей", "400", new DateOnly(2026, 10, 30), new DateOnly(2026, 11, 1), "");
             Console.WriteLine($"Создано (лояльность 3 ур.): {id4}");
 
-            //бронирование в декабре
-            string id3 = bookingService.Create("Алексей", "412", new DateOnly(2026, 12, 20), new DateOnly(2026, 12, 30), "");
+            //бронирование в декабре  (ожидается 15292,80)
+            if (alexey != null) alexey.LoylLvl = 0; //для тестирования искусственно повышен уровень до 0
+            string id3 = bookingService.Create("Алексей", "412", new DateOnly(2026, 12, 20), new DateOnly(2026, 12, 22), "");
             Console.WriteLine($"Создано: {id3}");
 
             
